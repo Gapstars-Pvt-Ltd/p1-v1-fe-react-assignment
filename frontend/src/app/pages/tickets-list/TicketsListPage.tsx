@@ -1,8 +1,11 @@
-import React from 'react';
+import {useEffect } from 'react';
 import { Paper, createStyles, Center } from '@mantine/core';
 import { PageLayout } from '../../../view/components/PageLayout/PageLayout';
 import { colors } from '../../constants/colors';
 import { TicketsListTable, TicketsListTableItemVM } from '../../tables/TicketsListTable';
+import { retrieveTickets } from '../../store/ticketsSlice'
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../store/store';
 
 const items: TicketsListTableItemVM[] = [
     {
@@ -28,7 +31,19 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
+
 export const TicketsListPage = () => {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(retrieveTickets());
+    }, [dispatch]);
+
+
+    const ticketsList = useSelector(
+        (state: RootState) => state.tickets.list.values
+    );
+
     const { classes } = useStyles();
 
     return (
@@ -36,7 +51,7 @@ export const TicketsListPage = () => {
             <Center>
                 <Paper p="xl" shadow="md" className={classes.formContainer}>
                     <h3 className={classes.header}>Tickets list</h3>
-                    <TicketsListTable items={items} />
+                    <TicketsListTable items={ticketsList} />
                 </Paper>
             </Center>
         </PageLayout>

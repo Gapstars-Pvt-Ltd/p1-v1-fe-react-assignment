@@ -3,6 +3,8 @@ import { FormProps } from '../interfaces/form';
 import { useForm, Controller } from 'react-hook-form';
 import { Grid, Input, Textarea, Button, createStyles } from '@mantine/core';
 import { FormLabel } from '../../view/components/Forms/FormLabel';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 const useStyles = createStyles((theme) => ({
     buttonContainer: {
@@ -30,8 +32,26 @@ const defaultValues: AddTicketsFormValues = {
     supplier: '',
 };
 
+/**
+ * Form Validation Schema
+ */
+const schema = yup.object().shape({
+    email:  yup.string().email().required(),
+    title: yup.string().required(),
+    description: yup.string().required(),
+    price: yup.number().typeError('price must be a number').required(),
+    amount: yup.number().typeError('amount must be a number').required(),
+    supplier: yup.string().required(),
+});
+
 export const AddTicketsForm = ({ onSubmit }: FormProps<AddTicketsFormValues>) => {
-    const { control, handleSubmit } = useForm<AddTicketsFormValues>({ defaultValues });
+
+    const { control, handleSubmit, formState } = useForm<AddTicketsFormValues>({
+        mode: 'onChange',
+        defaultValues,
+        resolver: yupResolver(schema),
+    });
+    const { errors } = formState;
     const { classes } = useStyles();
 
     return (
@@ -44,12 +64,17 @@ export const AddTicketsForm = ({ onSubmit }: FormProps<AddTicketsFormValues>) =>
                         return (
                             <>
                                 <FormLabel>Email</FormLabel>
-                                <Input onChange={onChange} value={value} name={name} />
+                                <Input.Wrapper error={errors.email?.message}>
+                                    <Input onChange={onChange} value={value} name={name} />
+                                </Input.Wrapper>
+
                             </>
                         );
                     }}
                 />
             </Grid.Col>
+
+
             <Grid.Col span={12}>
                 <Controller
                     name="title"
@@ -58,7 +83,9 @@ export const AddTicketsForm = ({ onSubmit }: FormProps<AddTicketsFormValues>) =>
                         return (
                             <>
                                 <FormLabel>Title</FormLabel>
-                                <Input onChange={onChange} value={value} name={name} />
+                                <Input.Wrapper error={errors.title?.message}>
+                                    <Input onChange={onChange} value={value} name={name} />
+                                </Input.Wrapper>
                             </>
                         );
                     }}
@@ -86,12 +113,9 @@ export const AddTicketsForm = ({ onSubmit }: FormProps<AddTicketsFormValues>) =>
                         return (
                             <>
                                 <FormLabel>Price</FormLabel>
-                                <Input
-                                    type="number"
-                                    onChange={onChange}
-                                    value={value}
-                                    name={name}
-                                />
+                                <Input.Wrapper error={errors.price?.message}>
+                                    <Input  type="number" onChange={onChange} value={value} name={name} />
+                                </Input.Wrapper>
                             </>
                         );
                     }}
@@ -105,12 +129,9 @@ export const AddTicketsForm = ({ onSubmit }: FormProps<AddTicketsFormValues>) =>
                         return (
                             <>
                                 <FormLabel>Amount of tickets</FormLabel>
-                                <Input
-                                    type="number"
-                                    onChange={onChange}
-                                    value={value}
-                                    name={name}
-                                />
+                                <Input.Wrapper error={errors.amount?.message}>
+                                    <Input  type="number" onChange={onChange} value={value} name={name} />
+                                </Input.Wrapper>
                             </>
                         );
                     }}
@@ -124,7 +145,9 @@ export const AddTicketsForm = ({ onSubmit }: FormProps<AddTicketsFormValues>) =>
                         return (
                             <>
                                 <FormLabel>Supplier</FormLabel>
-                                <Input onChange={onChange} value={value} name={name} />
+                                <Input.Wrapper error={errors.supplier?.message}>
+                                    <Input onChange={onChange} value={value} name={name} />
+                                </Input.Wrapper>
                             </>
                         );
                     }}

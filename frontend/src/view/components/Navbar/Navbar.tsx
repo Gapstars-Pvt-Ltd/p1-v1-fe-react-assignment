@@ -21,15 +21,16 @@ const useStyles = createStyles((theme) => ({
 
 export const Navbar = ({ className }: ChildlessBaseComponent) => {
     const { classes } = useStyles();
-
+    
     return (
         <Grid className={classNames(className, classes.navbarContainer)}>
             <Grid.Col span={6}>
                 <img src="/images/ET-logo.png" alt="Events travel logo" />
             </Grid.Col>
             <Grid.Col span={6} className={classes.linksContainer}>
-                <NavLink href="#">Home</NavLink>
-                <NavLink href="#">Tickets</NavLink>
+                <NavLink href="/">Home</NavLink>
+                <NavLink href="/">Tickets</NavLink>
+                <NavLink href="/addTicket">Create Tickets</NavLink>
             </Grid.Col>
         </Grid>
     );
