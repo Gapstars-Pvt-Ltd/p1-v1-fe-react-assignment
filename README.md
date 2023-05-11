@@ -6,7 +6,19 @@ The repository contains two projects: **Frontend** & **API**, you will be workin
 
 ## Assignment
 
-The assigment is to build a mini-application that can add and show tickets using the API. You are completely free on how you would realize and structure the application, as long as the requirements are met. It's also fine to use a UI library as long as you don't change the provided designs.
+The assigment is to finish this mini-application that can add and show tickets using the API. We've already provided a basic folder structure, UI components and initialized the redux store.
+
+### Pre-installed and used packages
+- React-hook-form - Form state management package
+- Mantine UI - UI component library
+- Redux toolkit - Simplified redux state management
+- Prettier - This project supports prettier
+
+### Still missing in the application
+- Routing
+- Api calls to the backend to populate the app with data
+- Implementation of the redux store to save the data from the API
+- Form validation (<b>TIP!</b> React-hook-form integrates easily with Yup: https://github.com/jquense/yup) 
 
 ### Requirements
 
@@ -15,8 +27,7 @@ The assigment is to build a mini-application that can add and show tickets using
 - The home and list page should be accessible by URL (so Routing should be used)
 - Use functional components
 - Use React Hooks
-- Use Redux to manage state
-- Functionality that can be interpreted from the designs should be implemented (for example the menu, form validation, ...)
+- Use Redux (toolkit) to manage state
 - Use margins and paddings consistently
 
 **Note:** If you are stuck on a specific requirement and can't continue, consider just skipping it so you can continue with the rest.
